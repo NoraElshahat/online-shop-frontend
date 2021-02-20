@@ -4,6 +4,8 @@ import axios from 'axios';
 
 export default class Login extends React.Component{
     state={
+        name : '',
+        token :'',
         email:'',
         password:''
       }
@@ -20,7 +22,11 @@ export default class Login extends React.Component{
         e.preventDefault()
         const user = {...this.state}
         axios.post("http://localhost:8000/users/login" , user).then((res)=>{
-          if(res.data){
+        const userName = res.data.user.name
+        const token = res.data.token
+        localStorage.setItem('name' , userName)
+        localStorage.setItem('token' , token)
+        if(res.data){
             history.push('/categories')
           }else{
             history.push('/signup')

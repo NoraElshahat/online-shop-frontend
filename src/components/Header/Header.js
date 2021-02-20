@@ -28,15 +28,16 @@ export default class Header extends React.Component{
     render(){
         return(
             <nav className="navbar navbar-expand-lg mb-3 p-3">
-                <a className="navbar-brand" href="#">
+                <Link className="navbar-brand" to='/'>
                 <img src="/img/carts.png" width="30" height="30" className="d-inline-block align-top" alt=""/>
-                    <span className="text-white ml-2 text-uppercase">Online Shop </span>
-                </a>
+                    <span className="text-white ml-2 text-uppercase" >Online Shop </span>
+                </Link>
+                    <Link to="/categories" className="nav-item nav-link active text-white" >Category</Link>
+
                         {
                         this.state.userName !== null && this.state.token !== null ?
                              <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                                 <div className="navbar-nav">
-                                    <Link to="/categories" className="nav-item nav-link active text-white" >Category</Link>
                                     <Link to="/products" className="nav-item nav-link text-white" >Product </Link>
                                     <Link to="/tags" className="nav-item nav-link text-white">Product Tag </Link>
                                 </div>
