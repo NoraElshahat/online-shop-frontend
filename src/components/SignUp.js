@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React from 'react';
 export default class Login extends React.Component{
-
   state={
     name:'',
     email:'',
