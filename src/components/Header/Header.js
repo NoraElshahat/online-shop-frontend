@@ -33,7 +33,6 @@ export default class Header extends React.Component{
                     <span className="text-white ml-2 text-uppercase" >Online Shop </span>
                 </Link>
                     <Link to="/categories" className="nav-item nav-link active text-white" >Category</Link>
-
                         {
                         localStorage.getItem('name') !== null && localStorage.getItem('token') !== null ?
                              <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
