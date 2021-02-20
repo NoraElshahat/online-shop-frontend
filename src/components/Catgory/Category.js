@@ -4,15 +4,14 @@ import { Link } from 'react-router-dom';
 import './category.css';
 
 export default class Category extends React.Component {
+   //this.props.location.state
     state = {
-        categories : []
+        categories : [] ,
     }
-
     componentDidMount () {
         axios.get('http://localhost:8000/categories').then((res)=>{
             const categories = res.data;  
             this.setState({categories});
-            console.log(categories[25].categoryImg.data);
         })
     }
     deleteCategory(id){

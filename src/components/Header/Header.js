@@ -1,12 +1,28 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+
 import './header.css';
 
 export default class Header extends React.Component{
-    logout = ()=>{
-        axios.post('http://localhost:8000/users/logout').then((res)=>{
-            console.log(res.data , 'from front')
+    state = {
+        userName : localStorage.getItem('name'),
+         token : localStorage.getItem('token')
+    }
+    header= {
+        ContentType:'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${this.state.token}`
+    }
+    logout = (e)=>{
+        e.preventDefault()
+        const history = this.props.history
+        axios.post('http://localhost:8000/users/logoutAll' , '', {headers:this.header} ).then((res)=>{
+        if(res){
+                this.setState({userName:'',token:''})
+                localStorage.clear();
+                history.push('/login')
+            }
         })
     }
     render(){
@@ -16,17 +32,23 @@ export default class Header extends React.Component{
                 <img src="/img/carts.png" width="30" height="30" className="d-inline-block align-top" alt=""/>
                     <span className="text-white ml-2 text-uppercase">Online Shop </span>
                 </a>
-                <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div className="navbar-nav">
-                        <Link to="/categories" className="nav-item nav-link active text-white" >Category</Link>
-                        <Link to="/products" className="nav-item nav-link text-white" >Product </Link>
-                        <Link to="/tags" className="nav-item nav-link text-white">Product Tag </Link>
-                    </div>
-                </div>
-                <div class="form-inline">
-                    <Link to="/login" className="nav-item nav-link active text-white" >Login</Link>
-                    <button className="btn btn-danger" onClick={this.logout} >Logout </button>    
-                </div>
+                        {
+                        this.state.userName !== null && this.state.token !== null ?
+                             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                                <div className="navbar-nav">
+                                    <Link to="/categories" className="nav-item nav-link active text-white" >Category</Link>
+                                    <Link to="/products" className="nav-item nav-link text-white" >Product </Link>
+                                    <Link to="/tags" className="nav-item nav-link text-white">Product Tag </Link>
+                                </div>
+                            </div>
+
+                        :
+                        <div className="collapse navbar-collapse" id="navbarNavAltMarkup"></div> }
+                        
+                <form class="form-inline" onSubmit={this.logout}>
+                   {!this.state.userName ? <Link to="/login" className="nav-item nav-link active text-white" >Login</Link> :  <span className="text-white mr-3">{this.state.userName}</span>}
+                    <button className="btn btn-danger">Logout </button>    
+                </form>
             </nav>
 
         );

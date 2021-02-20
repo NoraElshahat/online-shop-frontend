@@ -15,7 +15,7 @@ function App() {
   return (
       <div className="App">
         <Router>
-          <Header />
+          <Route path="/" component={Header}></Route>
           <Route path="/categories" component={Category}></Route>
           <Route path="/products_category/:id" component={ProductsOfCategory}></Route>
           <Route path="/products" component={AllProducts}></Route>

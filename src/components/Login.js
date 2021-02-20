@@ -19,7 +19,7 @@ export default class Login extends React.Component{
         const history = this.props.history
         e.preventDefault()
         const user = {...this.state}
-        axios.post("http://localhost:8000/users" , user).then((res)=>{
+        axios.post("http://localhost:8000/users/login" , user).then((res)=>{
           if(res.data){
             history.push('/categories')
           }else{
