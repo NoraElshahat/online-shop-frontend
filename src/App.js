@@ -10,12 +10,14 @@ import AllProducts from './components/Product/all_product';
 import addProduct from './components/Product/addProduct';
 import updateProduct from './components/Product/updateProduct'
 import ProductsOfCategory from './components/Product/ProductsOfCategory'
+import profile from './components/userProfile/profile'
 // import Footer from './components/Footer/Footer';
 function App() {
   return (
       <div className="App">
         <Router>
           <Route path="/" component={Header}></Route>
+          <Route path='/me/:id' component={profile}></Route>
           <Route path="/categories" component={Category}></Route>
           <Route path="/products_category/:id" component={ProductsOfCategory}></Route>
           <Route path="/products" component={AllProducts}></Route>

@@ -6,7 +6,8 @@ import './header.css';
 export default class Header extends React.Component{
     state = {
         userName : localStorage.getItem('name'),
-         token : localStorage.getItem('token')
+         token : localStorage.getItem('token'),
+         id : localStorage.getItem('id')
     }
     header= {
         ContentType:'application/json',
@@ -41,10 +42,12 @@ export default class Header extends React.Component{
                                 </div>
                             </div>
                         :
-                        <div className="collapse navbar-collapse" id="navbarNavAltMarkup"></div> }
-                        
+                        <div className="collapse navbar-collapse" id="navbarNavAltMarkup"></div> }         
                 <form className="form-inline" onSubmit={this.logout}>
-                   {!localStorage.getItem('name') ? <Link to="/login" className="nav-item nav-link active text-white" >Login</Link> :  <span className="text-white mr-3">{localStorage.getItem('name')}</span>}
+                   {
+                     !localStorage.getItem('name') ? <Link to="/login" className="nav-item nav-link active text-white" >Login</Link> 
+                   :
+                     <Link to ={`/me/${this.state.id}`}> <span className="text-white mr-3">{localStorage.getItem('name')}</span></Link>}
                     <button className="btn btn-danger">Logout </button>    
                 </form>
             </nav>

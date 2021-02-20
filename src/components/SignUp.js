@@ -23,10 +23,13 @@ export default class Login extends React.Component{
     e.preventDefault()
     const user = {...this.state}
     axios.post("http://localhost:8000/users" , user).then((res)=>{
+      console.log(res , 'hi result')
       const userName = res.data.user.name
       const userToken = res.data.token
+      const id = res.data.user._id
       localStorage.setItem('name' , userName)
       localStorage.setItem('token' , userToken)
+      localStorage.setItem('id' , id)
       if(res.data){
         history.push('/categories')
       }else{

@@ -22,8 +22,10 @@ export default class Login extends React.Component{
         axios.post("http://localhost:8000/users/login" , user).then((res)=>{
         const userName = res.data.user.name
         const token = res.data.token
+        const id = res.data.user._id
         localStorage.setItem('name' , userName)
         localStorage.setItem('token' , token)
+        localStorage.setItem('id' , id)
         if(res.data){
             history.push('/categories')
           }else{
