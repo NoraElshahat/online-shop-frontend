@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import './category.css';
 
 export default class Category extends React.Component {
-   //this.props.location.state
     state = {
         categories : [] ,
     }

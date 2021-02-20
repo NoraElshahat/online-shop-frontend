@@ -35,7 +35,7 @@ export default class Header extends React.Component{
                     <Link to="/categories" className="nav-item nav-link active text-white" >Category</Link>
 
                         {
-                        this.state.userName !== null && this.state.token !== null ?
+                        localStorage.getItem('name') !== null && localStorage.getItem('token') !== null ?
                              <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                                 <div className="navbar-nav">
                                     <Link to="/products" className="nav-item nav-link text-white" >Product </Link>
@@ -46,8 +46,8 @@ export default class Header extends React.Component{
                         :
                         <div className="collapse navbar-collapse" id="navbarNavAltMarkup"></div> }
                         
-                <form class="form-inline" onSubmit={this.logout}>
-                   {!this.state.userName ? <Link to="/login" className="nav-item nav-link active text-white" >Login</Link> :  <span className="text-white mr-3">{this.state.userName}</span>}
+                <form className="form-inline" onSubmit={this.logout}>
+                   {!localStorage.getItem('name') ? <Link to="/login" className="nav-item nav-link active text-white" >Login</Link> :  <span className="text-white mr-3">{localStorage.getItem('name')}</span>}
                     <button className="btn btn-danger">Logout </button>    
                 </form>
             </nav>

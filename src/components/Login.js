@@ -4,8 +4,6 @@ import axios from 'axios';
 
 export default class Login extends React.Component{
     state={
-        name : '',
-        token :'',
         email:'',
         password:''
       }
@@ -36,7 +34,7 @@ export default class Login extends React.Component{
     render(){
         return(
                 <div className="container">
-                    <div class="row">
+                    <div className="row">
                     <form className="col-4 m-auto" onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <label>Email address</label>
@@ -46,9 +44,9 @@ export default class Login extends React.Component{
                             <label>Password</label>
                             <input type="password" className="form-control" name="password" value = {this.state.password} placeholder="Enter Your password" onChange={this.handlePass}/>
                         </div>
-                        <button type="submit" class="btn btn-primary">Log in</button>
+                        <button type="submit" className="btn btn-primary">Log in</button>
                         <span>
-                            <Link to='/signup' class="ml-2">SignUp if you don't have account</Link>
+                            <Link to='/signup' className="ml-2">SignUp if you don't have account</Link>
                         </span>
                     </form>
                     </div>
