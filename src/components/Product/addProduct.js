@@ -6,10 +6,14 @@ function AddProduct(){
     let history = useHistory();
     const [product , updateProduct] = useState({name:'' , description:'' , price:''})
     const [categories , setCategories ] = useState([])
+    const [tags , updateTag] = useState([])
     useEffect(()=>{
         axios.get('http://localhost:8000/categories').then(({data:categories})=>{
             setCategories(categories)
             console.log(categories);
+    });
+    axios.get('http://localhost:8000/tags').then(({data:tags})=>{
+        updateTag(tags)
     });
     },[])
     function handleChangeName(event){
@@ -24,6 +28,9 @@ function AddProduct(){
 
     }
     function handleSelect(event){
+        updateProduct({...product , [event.target.name]:event.target.value})
+    }
+    function handleSelectTag(event){
         updateProduct({...product , [event.target.name]:event.target.value})
     }
     function AddProduct(e){
@@ -58,6 +65,15 @@ function AddProduct(){
                         <option value="selected">Choose Category For your Product</option>
                         {categories.map((category)=>{
                             return <option value={category._id}>{category.name}</option>
+                        })}
+                    </select>
+                </div>
+                <div>
+                    <label className="text-white">Tag</label>
+                    <select className="form-control form-select" name="tag"  onChange={handleSelectTag}>
+                        <option value="selected">Choose Tag For your Product</option>
+                        {tags.map((tag)=>{
+                            return <option value={tag._id}>{tag.name}</option>
                         })}
                     </select>
                 </div>

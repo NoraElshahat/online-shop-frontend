@@ -5,7 +5,8 @@ export default class addCategory extends React.Component{
     state={
         name:'',
         details :'',
-        categoryImg:{}
+        categoryImg:{},
+        handleError : ''
     }
     handleChangeName = (event)=>{
        this.setState({name:event.target.value})
@@ -27,16 +28,20 @@ export default class addCategory extends React.Component{
         axios.post('http://localhost:8000/categories' , category).then(res =>{
             if(res.data){
                 history.push('/categories')
-            } else{
-                history.push('/category_form')   
-            }
+            } 
+    }).catch((error)=>{
+        if(error.response){
+            this.setState({handleError:error.response.data})
+            history.push('/category_form')   
+        }
     })
   
 }
     render(){
         return(
             <center>
-            <form className="col-4" onSubmit={this.add_category} enctype="multipart/form-data">
+                {this.state.handleError ? <span className="text-danger">{this.state.handleError}</span> : ''}
+            <form className="col-4" onSubmit={this.add_category} >
                 <div className="form-group">
                     <label>Name</label>
                     <input type="text" className="form-control" name="name" placeholder="Enter Category Name" onChange={this.handleChangeName}/>

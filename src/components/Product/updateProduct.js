@@ -6,6 +6,7 @@ function UpdateProduct(){
     const params = useParams();
     let history = useHistory();
     const [products , updateProducts] = useState({})
+    const [tags , updateTag] = useState([])
     useEffect(()=>{
         axios.get('http://localhost:8000/products').then(({data:products})=>{
             updateProducts(products)
@@ -13,6 +14,9 @@ function UpdateProduct(){
                 return item._id === params.id
             })
             updateProducts(product[0]);
+    });
+    axios.get('http://localhost:8000/tags').then(({data:tags})=>{
+        updateTag(tags)
     });
     },[]);
 
@@ -23,6 +27,9 @@ function UpdateProduct(){
         updateProducts({...products , [event.target.name]:event.target.value})
     }
     function handleChangePrice (event){
+        updateProducts({...products , [event.target.name]:event.target.value})
+    }
+    function handleSelectTag(event){
         updateProducts({...products , [event.target.name]:event.target.value})
     }
     function saveProductUpdates(e){
@@ -50,6 +57,15 @@ function UpdateProduct(){
                  <div className="form-group">
                     <label>Price</label>
                     <input type="text" className="form-control" value={products.price} name="price" placeholder="Enter Price" onChange={handleChangePrice}/>
+                </div>
+                <div>
+                    <label className="text-white">Tag</label>
+                    <select className="form-control form-select" name="tag"  onChange={handleSelectTag}>
+                        <option value="selected">Choose Tag For your Product</option>
+                        {tags.map((tag)=>{
+                            return <option value={tag._id}>{tag.name}</option>
+                        })}
+                    </select>
                 </div>
                 <button type="submit" className="btn btn-success">Done </button>
             </form>

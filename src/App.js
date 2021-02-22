@@ -10,7 +10,10 @@ import AllProducts from './components/Product/all_product';
 import addProduct from './components/Product/addProduct';
 import updateProduct from './components/Product/updateProduct'
 import ProductsOfCategory from './components/Product/ProductsOfCategory'
-import profile from './components/userProfile/profile'
+import profile from './components/userProfile/profile';
+import tags from './components/Tag/tags';
+import AddTag from './components/Tag/AddTag'
+import UpdateTag from './components/Tag/UpdateTag'
 // import Footer from './components/Footer/Footer';
 function App() {
   return (
@@ -27,6 +30,9 @@ function App() {
           <Route path="/category_form_edit/:id" component={updateCategory}></Route>
           <Route path="/login" component={Login}></Route>
           <Route path="/signup" component={SignUp}></Route>
+          <Route path="/tags" component={tags}></Route>
+          <Route path='/add_tag' component={AddTag}></Route>
+          <Route path='/edit_tag/:id' component={UpdateTag}></Route>
           {/* <Footer /> */}
         </Router>
       </div>

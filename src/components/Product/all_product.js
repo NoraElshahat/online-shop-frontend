@@ -37,6 +37,7 @@ import './products.css'
                             <div className="card-body text-white">
                                 <p className="card-text">{product.description}</p>
                                 <p className="card-title">{product.price} $</p>
+                                <p className="card-title badge badge-danger">{ product.tag[0] ? product.tag[0].name : '' }</p>
                             </div>
                             <div className="card-footer bg-transparent border-white">
                                 {/* delete and edit */}
