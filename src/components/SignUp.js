@@ -4,7 +4,8 @@ export default class Login extends React.Component{
   state={
     name:'',
     email:'',
-    password:''
+    password:'',
+    handleError : []
   }
   handleName = (e)=>{
     e.preventDefault()
@@ -32,14 +33,18 @@ export default class Login extends React.Component{
       localStorage.setItem('id' , id)
       if(res.data){
         history.push('/categories')
-      }else{
-        history.push('/signup')
       }
+    }).catch((error)=>{
+      this.setState({handleError:error.response.data})
     })
   }
     render(){
         return(
         <form className="col-4 m-auto" onSubmit={this.handleSubmit}>
+          {!this.state.handleError.length == 0 ? this.state.handleError.map((err)=>{
+            return <p className="text-danger">{err}</p>
+
+          }) : ''}
             <div className="form-group">
               <label for="name">Name </label>
               <input type="text" className="form-control" name="username" value={this.state.name} placeholder="Enter Your Name" onChange={this.handleName}/>

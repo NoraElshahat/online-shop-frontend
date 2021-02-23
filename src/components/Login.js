@@ -5,7 +5,8 @@ import axios from 'axios';
 export default class Login extends React.Component{
     state={
         email:'',
-        password:''
+        password:'',
+        handleError : []
       }
       handleEmail = (e)=>{
         e.preventDefault()
@@ -28,9 +29,9 @@ export default class Login extends React.Component{
         localStorage.setItem('id' , id)
         if(res.data){
             history.push('/categories')
-          }else{
-            history.push('/signup')
           }
+        }).catch((err)=>{
+            this.setState({handleError:err.response.data})
         })
       }
     render(){
@@ -38,6 +39,10 @@ export default class Login extends React.Component{
                 <div className="container">
                     <div className="row">
                     <form className="col-4 m-auto" onSubmit={this.handleSubmit}>
+                      {!this.state.handleError.length == 0 ? this.state.handleError.map((err)=>{
+                           return <p className="text-danger"> {err}</p>
+
+                      }) : ''}
                         <div className="form-group">
                             <label>Email address</label>
                             <input type="email" className="form-control" name="email" value={this.state.email} placeholder="Enter Your Email" onChange={this.handleEmail}/>

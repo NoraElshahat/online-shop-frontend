@@ -7,6 +7,7 @@ export default class updateCategory extends React.Component{
         categories:[],
         name:"",
         details:"",
+        handleError:[]
     }
     componentDidMount () {
         axios.get('http://localhost:8000/categories').then((res)=>{
@@ -39,13 +40,20 @@ export default class updateCategory extends React.Component{
             if(res.data){
                 history.push('/categories')
             }
-        })
+        }).catch((error)=>{
+            this.setState({handleError:error.response.data})
+            history.push(`/category_form_edit/${id}`)   
+    })
     }
 
     render(){
         return(
             <center>
             <form className="col-4" onSubmit={this.updateCat}>
+                    {!this.state.handleError.length == 0 ? this.state.handleError.map((err)=>{
+                           return <p className="text-danger"> {err}</p>
+
+                    }) : ''}
                 <div className="form-group">
                     <label>Name</label>
                     <input type="text" className="form-control" name="name" value={this.state.name} onChange={this.handleChangeName}/>

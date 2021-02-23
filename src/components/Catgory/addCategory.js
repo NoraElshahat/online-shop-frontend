@@ -5,8 +5,8 @@ export default class addCategory extends React.Component{
     state={
         name:'',
         details :'',
-        categoryImg:{},
-        handleError : ''
+        categoryImg:'',
+        handleError : []
     }
     handleChangeName = (event)=>{
        this.setState({name:event.target.value})
@@ -30,18 +30,18 @@ export default class addCategory extends React.Component{
                 history.push('/categories')
             } 
     }).catch((error)=>{
-        if(error.response){
             this.setState({handleError:error.response.data})
             history.push('/category_form')   
-        }
     })
-  
 }
     render(){
         return(
             <center>
-                {this.state.handleError ? <span className="text-danger">{this.state.handleError}</span> : ''}
             <form className="col-4" onSubmit={this.add_category} >
+                    {!this.state.handleError.length == 0 ? this.state.handleError.map((err)=>{
+                           return <p className="text-danger"> {err}</p>
+
+                    }) : ''}
                 <div className="form-group">
                     <label>Name</label>
                     <input type="text" className="form-control" name="name" placeholder="Enter Category Name" onChange={this.handleChangeName}/>

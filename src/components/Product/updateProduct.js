@@ -7,6 +7,7 @@ function UpdateProduct(){
     let history = useHistory();
     const [products , updateProducts] = useState({})
     const [tags , updateTag] = useState([])
+    const [handleError , setError] = useState([])
     useEffect(()=>{
         axios.get('http://localhost:8000/products').then(({data:products})=>{
             updateProducts(products)
@@ -37,15 +38,20 @@ function UpdateProduct(){
         axios.patch(`http://localhost:8000/products/${params.id}` , products).then((res)=>{
             if(res.data){
                 history.push('/products')
-            }else{
-                history.push(`/product_form_edit/${params.id}`)   
             }
-        })
+        }).catch((error)=>{
+            setError(error.response.data)
+            history.push(`/product_form_edit/${params.id}`)   
+    })
     }
 
     return(
         <center>
             <form className="col-4" onSubmit={saveProductUpdates}>
+                {!handleError.length == 0 ? handleError.map((err)=>{
+                    return <p className="text-danger"> {err}</p>
+
+                }) : ''}    
                 <div className="form-group">
                     <label>Name</label>
                     <input type="text" value={products.name} className="form-control" name="name" placeholder="Enter Product Name" onChange={handleChangeName} />
@@ -61,7 +67,7 @@ function UpdateProduct(){
                 <div>
                     <label className="text-white">Tag</label>
                     <select className="form-control form-select" name="tag"  onChange={handleSelectTag}>
-                        <option value="selected">Choose Tag For your Product</option>
+                        <option >Choose Tag For your Product</option>
                         {tags.map((tag)=>{
                             return <option value={tag._id}>{tag.name}</option>
                         })}

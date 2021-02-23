@@ -7,6 +7,7 @@ function AddProduct(){
     const [product , updateProduct] = useState({name:'' , description:'' , price:''})
     const [categories , setCategories ] = useState([])
     const [tags , updateTag] = useState([])
+    const [handleError , setError] = useState([])
     useEffect(()=>{
         axios.get('http://localhost:8000/categories').then(({data:categories})=>{
             setCategories(categories)
@@ -38,15 +39,19 @@ function AddProduct(){
         axios.post('http://localhost:8000/products' , product).then((res)=>{
         if(res.data){
             history.push('/products')
-        }else{
-            history.push('/product_form')
-
         }
-    })
+    }).catch((error)=>{
+        setError(error.response.data)
+        history.push('/product_form')   
+})
     }
     return(
             <center>
             <form className="col-4" onSubmit={AddProduct} >
+                {!handleError.length == 0 ? handleError.map((err)=>{
+                    return <p className="text-danger"> {err}</p>
+
+                }) : ''}
                 <div className="form-group">
                     <label className="text-white">Name</label>
                     <input type="text" value={product.name} className="form-control" name="name" placeholder="Enter Product Name" onChange={handleChangeName}/>
@@ -61,8 +66,8 @@ function AddProduct(){
                 </div>
                 <div>
                     <label className="text-white">Category</label>
-                    <select className="form-control form-select" name="category"  onChange={handleSelect}>
-                        <option value="selected">Choose Category For your Product</option>
+                    <select className="form-control form-select" name="category"  onChange={handleSelect} >
+                        <option >Choose Category For your Product</option>
                         {categories.map((category)=>{
                             return <option value={category._id}>{category.name}</option>
                         })}
