@@ -5,7 +5,7 @@ export default class addCategory extends React.Component{
     state={
         name:'',
         details :'',
-        categoryImg:'',
+        categoryImg:null,
         handleError : []
     }
     handleChangeName = (event)=>{
@@ -15,17 +15,17 @@ export default class addCategory extends React.Component{
         this.setState({details:event.target.value})
      }
      handleImg = (e) =>{
-        this.setState({categoryImg:e.target.files[0].name})
+        this.setState({categoryImg:e.target.files[0]})
      }
     add_category = e =>{
         e.preventDefault();
+        const {name , details , categoryImg} = this.state
         const history = this.props.history
-        const category ={
-            name : this.state.name,
-            details : this.state.details,
-            categoryImg : this.state.categoryImg
-        };
-        axios.post('http://localhost:8000/categories' , category).then(res =>{
+        const data = new FormData() 
+        data.append('name' , name)
+        data.append('details' , details)
+        data.append('categoryImg' , categoryImg)
+        axios.post('http://localhost:8000/categories' , data).then(res =>{
             if(res.data){
                 history.push('/categories')
             } 
@@ -33,12 +33,14 @@ export default class addCategory extends React.Component{
             this.setState({handleError:error.response.data})
             history.push('/category_form')   
     })
+    
 }
     render(){
+        const {handleError} = this.state
         return(
             <center>
-            <form className="col-4" onSubmit={this.add_category} >
-                    {!this.state.handleError.length == 0 ? this.state.handleError.map((err)=>{
+            <form className="col-4" onSubmit={this.add_category} enctype="multipart/form-data" >
+                    {!handleError.length == 0 ? handleError.map((err)=>{
                            return <p className="text-danger"> {err}</p>
 
                     }) : ''}
@@ -52,7 +54,7 @@ export default class addCategory extends React.Component{
                 </div>
                 <div className="form-group">
                     <label>Upload Image</label>
-                    <input className="form-control" name="categoryImg" type="file" onChange={this.handleImg}/>
+                    <input className="form-control" type="file" name="categoryImg" id="categoryImg" onChange={this.handleImg}/>
                 </div>
                 <button type="submit" className="btn btn-success">Done </button>
             </form>

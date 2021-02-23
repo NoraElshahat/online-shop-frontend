@@ -7,6 +7,7 @@ export default class updateCategory extends React.Component{
         categories:[],
         name:"",
         details:"",
+        categoryImg:null,
         handleError:[]
     }
     componentDidMount () {
@@ -16,7 +17,7 @@ export default class updateCategory extends React.Component{
             const category = this.state.categories.filter((item)=>{
                 return item._id === this.props.match.params.id
             })
-            this.setState({name:category[0].name , details:category[0].details })
+            this.setState({name:category[0].name , details:category[0].details ,categoryImg:category[0].categoryImg})
         })
     }
     handleChangeName = (event)=>{
@@ -26,17 +27,20 @@ export default class updateCategory extends React.Component{
     handleChangeDetails = (event)=>{
         this.setState({details:event.target.value})
     }
+    handleImg = (e) =>{
+        this.setState({categoryImg:e.target.files[0]})
+     }
 
     updateCat = e =>{
         e.preventDefault();
+        const {name , details , categoryImg} = this.state
         const history = this.props.history
-        const oneCategory = {
-            name: this.state.name,
-            details : this.state.details
-        }
+        const data = new FormData() 
+        data.append('name' , name)
+        data.append('details' , details)
+        data.append('categoryImg' , categoryImg)
         const id = this.props.match.params.id;
-        axios.patch(`http://localhost:8000/categories/${id}`, oneCategory).then((res)=>{
-            console.log(res.data);
+        axios.patch(`http://localhost:8000/categories/${id}`, data).then((res)=>{
             if(res.data){
                 history.push('/categories')
             }
@@ -47,10 +51,11 @@ export default class updateCategory extends React.Component{
     }
 
     render(){
+        const {handleError} = this.state
         return(
             <center>
-            <form className="col-4" onSubmit={this.updateCat}>
-                    {!this.state.handleError.length == 0 ? this.state.handleError.map((err)=>{
+            <form className="col-4" onSubmit={this.updateCat} enctype="multipart/form-data">
+                    {!handleError.length == 0 ? handleError.map((err)=>{
                            return <p className="text-danger"> {err}</p>
 
                     }) : ''}
@@ -61,6 +66,10 @@ export default class updateCategory extends React.Component{
                 <div className="form-group">
                     <label>Details</label>
                     <input type="text" className="form-control" name="details" value={this.state.details} onChange={this.handleChangeDetails}/>
+                </div>
+                <div className="form-group">
+                    <label>Upload Image</label>
+                    <input className="form-control" type="file" name="categoryImg" id="categoryImg" onChange={this.handleImg}/>
                 </div>
                 <button type="submit" className="btn btn-success">Done </button>
             </form>
