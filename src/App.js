@@ -14,6 +14,8 @@ import profile from './components/userProfile/profile';
 import tags from './components/Tag/tags';
 import AddTag from './components/Tag/AddTag'
 import UpdateTag from './components/Tag/UpdateTag'
+import users from './components/users/users'
+import UpdateUser from './components/users/UpdateUser'
 // import Footer from './components/Footer/Footer';
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
           <Route path="/tags" component={tags}></Route>
           <Route path='/add_tag' component={AddTag}></Route>
           <Route path='/edit_tag/:id' component={UpdateTag}></Route>
+          <Route path="/users" component={users}></Route>
+          <Route path='/edit_user/:id' component={UpdateUser}></Route>
           {/* <Footer /> */}
         </Router>
       </div>

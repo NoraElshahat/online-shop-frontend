@@ -5,7 +5,8 @@ export default class Login extends React.Component{
     name:'',
     email:'',
     password:'',
-    handleError : []
+    isAdmin : false,
+    handleError : [],
   }
   handleName = (e)=>{
     e.preventDefault()
@@ -19,12 +20,15 @@ export default class Login extends React.Component{
     e.preventDefault()
     this.setState({password:e.target.value})
   }
+  handleCheck = (e) =>{
+    e.preventDefault()
+    this.setState({isAdmin:e.target.checked})
+  }
   handleSubmit = (e)=>{
     const history = this.props.history
     e.preventDefault()
     const user = {...this.state}
     axios.post("http://localhost:8000/users" , user).then((res)=>{
-      console.log(res , 'hi result')
       const userName = res.data.user.name
       const userToken = res.data.token
       const id = res.data.user._id
@@ -57,6 +61,12 @@ export default class Login extends React.Component{
             <div className="form-group">
               <label>Password</label>
               <input type="password" className="form-control" name="password" value={this.state.password} placeholder="Enter Your Password" onChange={this.handlePass}/>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" name="isAdmin" id="flexCheckDefault" onChange={this.handleCheck}/>
+              <label class="form-check-label mb-3" for="flexCheckDefault" >
+                as admin
+              </label>
             </div>
             <button type="submit" class="btn btn-primary">Sign up</button>
         </form>

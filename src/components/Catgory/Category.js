@@ -36,7 +36,7 @@ export default class Category extends React.Component {
                          <div className="col-lg-3">
 
                             <div className="card border-dark mb-3" style={{width: "18rem"}}>
-                                <img class="card-img-top" src={`http://localhost:8000/uploads/${item.categoryImg}`} alt="Card image cap" />
+                                <img class="card-img-top" src={`http://localhost:8000/uploads/${item.categoryImg}`} width="200px" height="300px" alt="Card image cap" />
                                 {/* link to products belong to this category */}
                                 <Link to={`/products_category/${item._id}`}>
                                     <div className="card-header text-white bg-transparent border-default">{item.name}</div>
