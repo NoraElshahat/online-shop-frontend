@@ -10,7 +10,7 @@ export default class Login extends React.Component{
   }
   handleName = (e)=>{
     e.preventDefault()
-    this.setState({name:e.target.value})
+    this.setState({name:e.target.value}) 
   }
   handleEmail = (e)=>{
     e.preventDefault()
@@ -32,8 +32,10 @@ export default class Login extends React.Component{
       const userName = res.data.user.name
       const userToken = res.data.token
       const id = res.data.user._id
+      const isAdmin = res.data.user.isAdmin
       localStorage.setItem('name' , userName)
       localStorage.setItem('token' , userToken)
+      localStorage.setItem('isAdmin' , isAdmin)
       localStorage.setItem('id' , id)
       if(res.data){
         history.push('/categories')

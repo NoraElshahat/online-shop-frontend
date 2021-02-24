@@ -8,10 +8,15 @@ export default class updateCategory extends React.Component{
         name:"",
         details:"",
         categoryImg:null,
-        handleError:[]
+        handleError:[],
+        header: {
+            ContentType:'application/json',
+            Accept: 'application/json',
+            authorization: `Bearer ${localStorage.getItem('token')}`
+        }
     }
     componentDidMount () {
-        axios.get('http://localhost:8000/categories').then((res)=>{
+        axios.get('http://localhost:8000/categories',{headers:this.state.header}).then((res)=>{
             const categories = res.data;
             this.setState({categories});
             const category = this.state.categories.filter((item)=>{

@@ -20,11 +20,19 @@ const useStyles = makeStyles({
 export default function Users() {
     const [users , updateUsers] = useState([])
     const [disableuser , updateDisableUser] = useState(false)
+    // const [header , setHeader]= useState({})
+    const header= {
+        ContentType:'application/json',
+        Accept: 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`
+    }
     useEffect(()=>{
-        axios.get('http://localhost:8000/users').then((res)=>{
+        axios.get('http://localhost:8000/users',{headers:header}).then((res)=>{
         if(res.data){
             updateUsers(res.data)
             }
+    }).catch((err)=>{
+        console.log(err.response.data)
     })
     },[])
     function deleteUser(id){

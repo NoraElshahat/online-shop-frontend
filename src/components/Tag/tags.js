@@ -19,8 +19,13 @@ const useStyles = makeStyles({
 
 export default function Tags() {
     const [tags , updateTags] = useState([])
+    const header= {
+      ContentType:'application/json',
+      Accept: 'application/json',
+      authorization: `Bearer ${localStorage.getItem('token')}`
+  }
     useEffect(()=>{
-        axios.get('http://localhost:8000/tags').then((res)=>{
+        axios.get('http://localhost:8000/tags',{headers:header}).then((res)=>{
         if(res.data){
                 updateTags(res.data)
             }

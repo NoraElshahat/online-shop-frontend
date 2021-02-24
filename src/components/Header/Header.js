@@ -23,6 +23,8 @@ export default class Header extends React.Component{
                 localStorage.clear();
                 history.push('/login')
             }
+        }).catch((error)=>{
+            console.log(error.response)
         })
     }
     render(){
@@ -30,7 +32,7 @@ export default class Header extends React.Component{
             <nav className="navbar navbar-expand-lg mb-3 p-3">
                 <Link className="navbar-brand" to='/'>
                 <img src="/img/carts.png" width="30" height="30" className="d-inline-block align-top" alt=""/>
-                    <span className="text-white ml-2 text-uppercase" >Online Shop </span>
+                   {localStorage.getItem('isAdmin')=='true'? <span className="text-white ml-2 text-uppercase" >DashBoard </span> : <span className="text-white ml-2 text-uppercase" >Online Shop </span>} 
                 </Link>
                     <Link to="/categories" className="nav-item nav-link active text-white" >Category</Link>
                         {
@@ -38,8 +40,8 @@ export default class Header extends React.Component{
                              <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                                 <div className="navbar-nav">
                                     <Link to="/products" className="nav-item nav-link text-white" >Product </Link>
-                                    <Link to="/tags" className="nav-item nav-link text-white">Product Tag </Link>
-                                    <Link to="/users" className="nav-item nav-link text-white">Users </Link>
+                                    {localStorage.getItem('isAdmin')=='true' ?<Link to="/tags" className="nav-item nav-link text-white">Product Tag </Link> : ''}
+                                   {localStorage.getItem('isAdmin')=='true' ?<Link to="/users" className="nav-item nav-link text-white">Users </Link> : ''} 
                                 </div>
                             </div>
                         :

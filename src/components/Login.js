@@ -6,6 +6,7 @@ export default class Login extends React.Component{
     state={
         email:'',
         password:'',
+        isAdmin : false,
         handleError : []
       }
       handleEmail = (e)=>{
@@ -24,7 +25,10 @@ export default class Login extends React.Component{
         const userName = res.data.user.name
         const token = res.data.token
         const id = res.data.user._id
+        const isAdmin = res.data.user.isAdmin
+
         localStorage.setItem('name' , userName)
+        localStorage.setItem('isAdmin' , isAdmin)
         localStorage.setItem('token' , token)
         localStorage.setItem('id' , id)
         if(res.data){
@@ -40,7 +44,7 @@ export default class Login extends React.Component{
                     <div className="row">
                     <form className="col-4 m-auto" onSubmit={this.handleSubmit}>
                       {!this.state.handleError.length == 0 ? this.state.handleError.map((err)=>{
-                           return <p className="text-danger"> {err}</p>
+                           return<p className="text-danger"> {err}</p>
 
                       }) : ''}
                         <div className="form-group">

@@ -7,6 +7,7 @@ export default class Category extends React.Component {
     state = {
         categories : [] ,
     }
+   
     componentDidMount () {
         axios.get('http://localhost:8000/categories').then((res)=>{
             const categories = res.data; 
@@ -26,9 +27,13 @@ export default class Category extends React.Component {
         return (
             <div>
                 <center>
+                    {localStorage.getItem('isAdmin')=='true' 
+                    ?
                     <Link to="/category_form"> 
                             <img src="img/add.png" width="50" height="50" className="d-inline-block align-top mb-3" alt=""/>
-                    </Link>
+                    </Link> 
+                    : ''}
+                    
                 </center>
             <div className="row ml-2">
                     {this.state.categories.map((item)=>{
@@ -46,14 +51,18 @@ export default class Category extends React.Component {
                                 </div>
 
                                 {/* delete and edit */}
-                                <div className="card-footer bg-transparent border-default">
+                                {localStorage.getItem('isAdmin')=='true' 
+                                ?
+                                    <div className="card-footer bg-transparent border-default">
                                     <Link to={`/category_form_edit/${item._id}`}  style={{cursor:"pointer"}}>
-                                         <img src="img/edit.png" width="28" height="28" className="d-inline-block align-top ml-5 mt-1" alt=""/>
+                                        <img src="img/edit.png" width="28" height="28" className="d-inline-block align-top ml-5 mt-1" alt=""/>
                                     </Link>
                                     <a onClick={()=>{this.deleteCategory(item._id)}} style={{cursor:"pointer"}}>
                                         <img src="img/delete.png" width="35" height="35" className="d-inline-block align-top ml-5 mb-3" alt=""/>
                                     </a>
                                 </div>
+                            :''}
+                                
                             </div>
                             </div>
                         )

@@ -5,8 +5,13 @@ import './products.css'
  function AllProducts(){
     let history = useHistory();
     const [products , updateProducts] = useState([]);
+    const header= {
+        ContentType:'application/json',
+        Accept: 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`
+    }
     useEffect(()=>{
-        axios.get('http://localhost:8000/products').then(({data:products})=>{
+        axios.get('http://localhost:8000/products',{headers:header}).then(({data:products})=>{
             updateProducts(products)
     });
     },[]);
@@ -22,16 +27,20 @@ import './products.css'
     return(
        <div>
            <center>
-                <Link to="/product_form"> 
-                        <img src="img/add.png" width="50" height="50" className="d-inline-block align-top mb-3" alt=""/>
-                </Link>
+                {localStorage.getItem('isAdmin')=='true' 
+                    ?
+                    <Link to="/product_form"> 
+                            <img src="img/add.png" width="50" height="50" className="d-inline-block align-top mb-3" alt=""/>
+                    </Link>
+                    :
+                ''}
             </center>
         <div className="row ml-3">
             {products.map((product)=>{
                 return(
                     <div className="col-lg-3">
                         <div className="card border-dark mb-3" style={{width: "18rem"}}>
-                        <img class="card-img-top" src="/img/static.jpg" alt="Card image cap" />
+                        <img class="card-img-top" src={`http://localhost:8000/uploads/${product.productImg}`} width="200px" height="300px" alt="Card image cap" />
 
                             <div className="card-header text-white bg-transparent border-white">{product.name}</div>
                             <div className="card-body text-white">
@@ -41,6 +50,8 @@ import './products.css'
                             </div>
                             <div className="card-footer bg-transparent border-white">
                                 {/* delete and edit */}
+                                {localStorage.getItem('isAdmin')=='true' 
+                                ?
                                 <div className="card-footer bg-transparent border-default">
                                     <Link to={`/product_form_edit/${product._id}`}  style={{cursor:"pointer"}}>
                                          <img src="img/edit.png" width="28" height="28" className="d-inline-block align-top  ml-5 mt-1" alt=""/>
@@ -49,6 +60,8 @@ import './products.css'
                                         <img src="img/delete.png" width="35" height="35" className="d-inline-block align-top ml-5" alt=""/>
                                     </a>
                                 </div>
+                                :
+                                ''}
                             </div>
                             </div>
                     </div>
