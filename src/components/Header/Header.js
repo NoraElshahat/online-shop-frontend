@@ -7,7 +7,8 @@ export default class Header extends React.Component{
     state = {
         userName : localStorage.getItem('name'),
          token : localStorage.getItem('token'),
-         id : localStorage.getItem('id')
+         id : localStorage.getItem('id'),
+         categorySearch : '',
     }
     header= {
         ContentType:'application/json',
@@ -27,6 +28,22 @@ export default class Header extends React.Component{
             console.log(error.response)
         })
     }
+    handleSearch = (e) => {
+        this.setState({categorySearch:e.target.value})
+    }
+    searchProduct = (e) => {
+        e.preventDefault()
+        const history = this.props.history
+        axios.get('http://localhost:8000/categories').then((res)=>{
+            const categories = res.data
+            console.log(categories)
+            const categoryFiended = categories.filter((item)=>{
+                return item.name == this.state.categorySearch
+            })
+            history.push({pathname:'/category_search' , state:categoryFiended})
+        })
+    }
+    
     render(){
         return(
             <nav className="navbar navbar-expand-lg mb-3 p-3">
@@ -46,6 +63,10 @@ export default class Header extends React.Component{
                             </div>
                         :
                         <div className="collapse navbar-collapse" id="navbarNavAltMarkup"></div> }         
+                <form className="form-inline" onSubmit={this.searchProduct}>
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search For Category" aria-label="Search" value={this.state.categorySearch} onChange={this.handleSearch}/>
+                        <button class="btn btn-outline-success my-2 my-sm-0 mr-3" type="submit">Search</button>
+                </form>
                 <form className="form-inline" onSubmit={this.logout}>
                    {
                      !localStorage.getItem('name') ? <Link to="/login" className="nav-item nav-link active text-white" >Login</Link> 

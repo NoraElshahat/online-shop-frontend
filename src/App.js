@@ -16,6 +16,7 @@ import AddTag from './components/Tag/AddTag'
 import UpdateTag from './components/Tag/UpdateTag'
 import users from './components/users/users'
 import UpdateUser from './components/users/UpdateUser'
+import SearchCategory from './components/Catgory/searchedCategory'
 // import Footer from './components/Footer/Footer';
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" component={Header}></Route>
           <Route path='/me/:id' component={profile}></Route>
           <Route path="/categories" component={Category}></Route>
+          <Route path="/category_search" component={SearchCategory}></Route>
           <Route path="/products_category/:id" component={ProductsOfCategory}></Route>
           <Route path="/products" component={AllProducts}></Route>
           <Route path="/product_form" component={addProduct}></Route>
@@ -37,6 +39,7 @@ function App() {
           <Route path='/edit_tag/:id' component={UpdateTag}></Route>
           <Route path="/users" component={users}></Route>
           <Route path='/edit_user/:id' component={UpdateUser}></Route>
+          
           {/* <Footer /> */}
         </Router>
       </div>
