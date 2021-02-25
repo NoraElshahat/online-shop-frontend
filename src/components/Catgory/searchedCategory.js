@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 
 export default class SearchCategory extends React.Component{
     state={
@@ -20,8 +22,9 @@ export default class SearchCategory extends React.Component{
                                     <div className="card border-dark mb-3" style={{width: "18rem"}}>
                                     <img class="card-img-top" src={`http://localhost:8000/uploads/${item.categoryImg}`} width="200px" height="300px" alt="Card image cap" />
         
-                                    <div className="card-header text-white bg-transparent border-white">{item.name}</div>
-                                        <div className="card-body text-white">
+                                    <Link to={`/products_category/${item._id}`}>
+                                        <div className="card-header text-white bg-transparent border-default">{item.name}</div>
+                                    </Link>                                        <div className="card-body text-white">
                                             <p className="card-text">{item.details}</p>
                                         </div>
                                     </div>

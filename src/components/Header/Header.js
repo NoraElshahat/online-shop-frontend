@@ -65,7 +65,7 @@ export default class Header extends React.Component{
                         <div className="collapse navbar-collapse" id="navbarNavAltMarkup"></div> }         
                 <form className="form-inline" onSubmit={this.searchProduct}>
                         <input class="form-control mr-sm-2" type="search" placeholder="Search For Category" aria-label="Search" value={this.state.categorySearch} onChange={this.handleSearch}/>
-                        <button class="btn btn-outline-success my-2 my-sm-0 mr-3" type="submit">Search</button>
+                        <button class="btn btn-outline-danger my-2 my-sm-0 mr-3" type="submit">Search</button>
                 </form>
                 <form className="form-inline" onSubmit={this.logout}>
                    {
